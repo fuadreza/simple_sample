@@ -1,8 +1,9 @@
 
-import 'package:simple_sample/feature/main/data/config/base_config.dart';
-import 'package:simple_sample/feature/main/data/config/dev_config.dart';
-import 'package:simple_sample/feature/main/data/config/prod_config.dart';
-import 'package:simple_sample/feature/main/data/config/staging_config.dart';
+
+import 'package:simple_sample/core/config/base_config.dart';
+import 'package:simple_sample/core/config/dev_config.dart';
+import 'package:simple_sample/core/config/prod_config.dart';
+import 'package:simple_sample/core/config/staging_config.dart';
 
 enum Env {
   DEV,
@@ -18,7 +19,7 @@ class Environment {
 
   static Environment get instance => _instance;
 
-  BaseConfig? config;
+  BaseConfig config = DevConfig();
 
   initConfig(Env environment) {
     config = _getConfig(environment);

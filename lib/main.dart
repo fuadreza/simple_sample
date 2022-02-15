@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_sample/feature/main/data/config/environment.dart';
+import 'package:simple_sample/core/config/environment.dart';
 import 'package:simple_sample/feature/main/presentation/bindings/main_binding.dart';
 import 'package:simple_sample/feature/main/presentation/modules/home/home_view.dart';
 
