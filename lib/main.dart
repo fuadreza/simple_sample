@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_sample/core/config/environment.dart';
 import 'package:simple_sample/feature/main/presentation/bindings/main_binding.dart';
-import 'package:simple_sample/feature/main/presentation/modules/home/home_view.dart';
+import 'package:simple_sample/feature/main/presentation/modules/login/login_view.dart';
 
 void main() {
   environment.initConfig(Env.DEV);
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeView(title: 'Flutter Demo Home Page'),
+      home: LoginView(title: 'Flutter Demo Home Page'),
       initialBinding: MainBinding(),
     );
   }

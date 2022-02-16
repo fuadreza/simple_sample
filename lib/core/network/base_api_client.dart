@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:simple_sample/core/config/environment.dart';
@@ -16,7 +17,7 @@ class BaseApiClient {
     String? path
   }) async {
     _dio.options.headers['content-Type'] = StringConstants.HTTP_APPLICATION_JSON;
-    _dio.options.headers['Accept'] = '*/*';
+    // _dio.options.headers['Accept'] = '*/*';
 
     _dio.interceptors.clear();
     pathUrl = environment.config.apiHost + pathUrl;
@@ -28,17 +29,27 @@ class BaseApiClient {
 
   Future<String> post({
     required String pathUrl,
-    String? jsonBody
+    Map<String, dynamic>? jsonBody
   }) async {
     _dio.options.headers['content-Type'] = StringConstants.HTTP_APPLICATION_JSON;
-    _dio.options.headers['Accept'] = '*/*';
+    // _dio.options.headers['Accept'] = '*/*';
 
     _dio.interceptors.clear();
     pathUrl = environment.config.apiHost + pathUrl;
 
-    final Response<dynamic> res = await getPostResponse(pathUrl, jsonBody);
+    print('PATH >> $pathUrl');
+    print('DATA >> $jsonBody');
 
-    return handleResponse(res);
+    try {
+      final Response<dynamic> res = await getPostResponse(pathUrl, jsonBody);
+
+      log('RESPONSE => $res');
+
+      return handleResponse(res);
+    } catch (error) {
+      throw handleError(error);
+    }
+
   }
 
   Future<Response<dynamic>> getGetResponse(
@@ -59,7 +70,7 @@ class BaseApiClient {
 
   Future<Response<dynamic>> getPostResponse(
       String pathUrl,
-      String? jsonBody
+      Map<String, dynamic>? jsonBody
   ) async {
     if(jsonBody != null) {
       return await _dio.post(pathUrl, data: jsonBody);
@@ -73,8 +84,20 @@ class BaseApiClient {
 
     if (res.statusCode == NumberConstants.HTTP_STATUS_OK) {
       return res.toString();
+    } else if (res.statusCode == NumberConstants.HTTP_STATUS_BAD_GATEWAY) {
+      throw ServerException(message: 'Server Error, Bad Gateway!');
     } else {
-      throw ServerException(message: response['message']);
+      throw ServerException(message: response['code']);
+    }
+  }
+
+  Object handleError(Object error) {
+    if (error is DioError) {
+      final Map<String, dynamic> response = jsonDecode(error.response.toString());
+
+      throw ServerException(message: response['code']);
+    } else {
+      throw ServerException(message: 'not working');
     }
   }
 }

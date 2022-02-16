@@ -9,11 +9,11 @@ class PosApiService {
   PosApiService({required this.apiClient});
 
   Future<String> loginUser(LoginParam loginParam) {
-    final Map<String, dynamic> params = <String, dynamic> {
+    final Map<String, dynamic> jsonBody = <String, dynamic> {
       'email': loginParam.email,
       'password': loginParam.password
     };
 
-    return apiClient.get(pathUrl: PosApiUrl.URL_LOGIN, params: params);
+    return apiClient.post(pathUrl: PosApiUrl.URL_LOGIN, jsonBody: jsonBody);
   }
 }

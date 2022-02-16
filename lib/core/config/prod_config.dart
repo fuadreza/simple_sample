@@ -1,5 +1,5 @@
 
-import 'package:simple_sample/feature/main/data/config/base_config.dart';
+import 'package:simple_sample/core/config/base_config.dart';
 
 class ProdConfig implements BaseConfig {
 
