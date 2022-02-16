@@ -43,6 +43,7 @@ class LoginController extends GetxController {
       _showSnackBar('Success', 'Login Success');
       Get.offAll(const HomeView(title: 'Home Screen',));
     } on ServerException catch (error) {
+      loginState = LoginFailed(message: '${error.message}');
       Get.defaultDialog(
         title: 'Error',
         middleText: '${error.message}',

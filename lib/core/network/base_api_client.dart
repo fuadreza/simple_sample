@@ -93,7 +93,9 @@ class BaseApiClient {
 
   Object handleError(Object error) {
     if (error is DioError) {
-      final Map<String, dynamic> response = jsonDecode(error.response.toString());
+      final Map<String, dynamic> response = error.response != null
+          ? jsonDecode(error.response.toString())
+          : {'code': 'error unidentified'} ;
 
       throw ServerException(message: response['code']);
     } else {

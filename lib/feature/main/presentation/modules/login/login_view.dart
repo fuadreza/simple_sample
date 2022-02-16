@@ -33,6 +33,9 @@ class LoginView extends GetView<LoginController> {
               Text(
                 'Please login before entering:',
               ),
+              SizedBox(
+                height: 8,
+              ),
               TextFormField(
                 controller: _emailController,
                 validator: (value) {
@@ -57,11 +60,6 @@ class LoginView extends GetView<LoginController> {
               SizedBox(
                 height: 8,
               ),
-              Obx(() =>
-              controller.loginState is LoginLoading
-                  ? const Text('Loading')
-                  : const SizedBox()
-              ),
               ElevatedButton(
                 onPressed: () async {
                   if (formKey.currentState?.validate() ?? false) {
@@ -69,6 +67,14 @@ class LoginView extends GetView<LoginController> {
                   }
                 },
                 child: Text('Login'),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Obx(() =>
+              controller.loginState is LoginLoading
+                  ? const CircularProgressIndicator()
+                  : const SizedBox()
               ),
             ],
           ),
