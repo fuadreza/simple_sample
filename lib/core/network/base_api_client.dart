@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:simple_sample/core/config/environment.dart';
 import 'package:simple_sample/core/constants/number_constants.dart';
 import 'package:simple_sample/core/constants/string_constants.dart';
+import 'package:simple_sample/core/network/interceptors/custom_interceptor.dart';
 import 'package:simple_sample/core/network/server_exception.dart';
 
 class BaseApiClient {
@@ -17,14 +18,21 @@ class BaseApiClient {
     String? path
   }) async {
     _dio.options.headers['content-Type'] = StringConstants.HTTP_APPLICATION_JSON;
-    // _dio.options.headers['Accept'] = '*/*';
 
     _dio.interceptors.clear();
+    _dio.interceptors.add(CustomInterceptors());
+
     pathUrl = environment.config.apiHost + pathUrl;
 
-    final Response<dynamic> res = await getGetResponse(pathUrl, params, path);
+    try {
+      final Response<dynamic> res = await getGetResponse(pathUrl, params, path);
 
-    return handleResponse(res);
+      log('GET RESPONSE => $res');
+
+      return handleResponse(res);
+    } catch (error) {
+      throw handleError(error);
+    }
   }
 
   Future<String> post({
@@ -32,18 +40,16 @@ class BaseApiClient {
     Map<String, dynamic>? jsonBody
   }) async {
     _dio.options.headers['content-Type'] = StringConstants.HTTP_APPLICATION_JSON;
-    // _dio.options.headers['Accept'] = '*/*';
 
     _dio.interceptors.clear();
-    pathUrl = environment.config.apiHost + pathUrl;
+    _dio.interceptors.add(CustomInterceptors());
 
-    print('PATH >> $pathUrl');
-    print('DATA >> $jsonBody');
+    pathUrl = environment.config.apiHost + pathUrl;
 
     try {
       final Response<dynamic> res = await getPostResponse(pathUrl, jsonBody);
 
-      log('RESPONSE => $res');
+      log('POST RESPONSE => $res');
 
       return handleResponse(res);
     } catch (error) {
