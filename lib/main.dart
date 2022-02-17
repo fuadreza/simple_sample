@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_sample/core/config/environment.dart';
+import 'package:simple_sample/core/services/hive_service.dart';
 import 'package:simple_sample/feature/main/presentation/bindings/main_binding.dart';
 import 'package:simple_sample/feature/main/presentation/modules/login/login_view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   environment.initConfig(Env.DEV);
-  print('CONFIG ENV => ${environment.config}');
+  await hive.init();
   runApp(const MyApp());
 }
 
