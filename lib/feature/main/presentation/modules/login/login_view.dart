@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:simple_sample/feature/main/domain/entities/login/state/login_state.dart';
 import 'package:simple_sample/feature/main/presentation/modules/login/login_controller.dart';
@@ -14,8 +13,8 @@ class LoginView extends GetView<LoginController> {
   final String? title;
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,26 +35,32 @@ class LoginView extends GetView<LoginController> {
               SizedBox(
                 height: 8,
               ),
-              TextFormField(
-                controller: _emailController,
-                validator: (value) {
-                  return (value == null || value.isEmpty)
-                      ? 'Please Enter Email'
-                      : null;
-                },
-                decoration: inputDecoration('E-mail', Icons.person),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
+                  controller: _emailController,
+                  validator: (value) {
+                    return (value == null || value.isEmpty)
+                        ? 'Please Enter Email'
+                        : null;
+                  },
+                  decoration: inputDecoration('E-mail', Icons.person),
+                ),
               ),
               SizedBox(
                 height: 8,
               ),
-              TextFormField(
-                validator: (value) {
-                  return (value == null || value.isEmpty)
-                      ? 'Please Enter Password'
-                      : null;
-                },
-                controller: _passwordController,
-                decoration: inputDecoration('Password', Icons.lock),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
+                  validator: (value) {
+                    return (value == null || value.isEmpty)
+                        ? 'Please Enter Password'
+                        : null;
+                  },
+                  controller: _passwordController,
+                  decoration: inputDecoration('Password', Icons.lock),
+                ),
               ),
               SizedBox(
                 height: 8,
