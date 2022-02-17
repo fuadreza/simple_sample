@@ -1,4 +1,4 @@
-import 'package:simple_sample/feature/main/domain/entities/login_response/login_response.dart';
+import 'package:simple_sample/feature/main/domain/entities/login/response/login_response.dart';
 
 class LoginResponseModel extends LoginResponse {
   final String token;
