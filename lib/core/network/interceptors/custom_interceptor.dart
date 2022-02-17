@@ -5,13 +5,6 @@ import 'package:simple_sample/core/services/hive_service.dart';
 class CustomInterceptors extends Interceptor {
   CustomInterceptors();
 
-  // CustomInterceptors(this._dio, this._baseUrl, {this.params, this.data});
-
-  // final String _baseUrl;
-  // final Dio _dio;
-  // final Map<String, dynamic>? params;
-  // final FormData? data;
-
   @override
   void onRequest(
       RequestOptions options,

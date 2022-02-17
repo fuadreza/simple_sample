@@ -6,7 +6,7 @@ class LoginResponse extends Equatable {
   final String userName;
   final String fullName;
 
-  const LoginResponse(this.token, this.userName, this.fullName);
+  const LoginResponse({required this.token, required this.userName, required this.fullName});
 
   @override
   List<Object?> get props => [token, userName, fullName];

@@ -9,7 +9,7 @@ class LoginResponseModel extends LoginResponse {
     required this.token,
     required this.userName,
     required this.fullName,
-  }) : super(token, userName, fullName);
+  }) : super(token: token, userName: userName, fullName: fullName);
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(

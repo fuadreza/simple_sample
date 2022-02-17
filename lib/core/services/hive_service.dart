@@ -8,6 +8,8 @@ final HiveService hive = HiveService.instance;
 
 class HiveService {
 
+  //region INITIALIZE
+
   static const String BOX_TOKEN = 'boxToken';
 
   static const String KEY_TOKEN = 'keyToken';
@@ -21,11 +23,21 @@ class HiveService {
     Hive.init(appDocDirectory.path);
   }
 
+  //endregion
+
+
+  //region SAVE
+
   saveToken(String token) async {
     final Box boxToken = await Hive.openBox(BOX_TOKEN);
     await boxToken.put(KEY_TOKEN, token);
     boxToken.close();
   }
+
+  //endregion
+
+
+  //region GETTER
 
   Future<String?> getToken() async {
     final Box boxToken = await Hive.openBox(BOX_TOKEN);
@@ -33,5 +45,18 @@ class HiveService {
     boxToken.close();
     return token;
   }
+
+  //endregion
+
+
+  //region DELETE
+
+  deleteToken() async {
+    final Box boxToken = await Hive.openBox(BOX_TOKEN);
+    await boxToken.delete(KEY_TOKEN);
+    boxToken.close();
+  }
+
+  //endregion
 
 }
