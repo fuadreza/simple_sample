@@ -1,7 +1,7 @@
 
 import 'package:simple_sample/core/network/base_api_client.dart';
 import 'package:simple_sample/feature/main/data/services/api/pos_api_url.dart';
-import 'package:simple_sample/feature/main/domain/entities/login_param/login_param.dart';
+import 'package:simple_sample/feature/main/domain/entities/login/param/login_param.dart';
 
 class PosApiService {
   final BaseApiClient apiClient;
@@ -15,5 +15,11 @@ class PosApiService {
     };
 
     return apiClient.post(pathUrl: PosApiUrl.URL_LOGIN, jsonBody: jsonBody);
+  }
+
+  Future<String> getLocations(String pageSize) {
+    final String path = '?pageSize=$pageSize';
+
+    return apiClient.get(pathUrl: PosApiUrl.URL_LOCATIONS, path: path);
   }
 }
