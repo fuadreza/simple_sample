@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_sample/feature/main/domain/entities/location/response/location_response.dart';
+import 'package:simple_sample/feature/main/domain/entities/location/state/location_state.dart';
 import 'package:simple_sample/feature/main/presentation/modules/home/home_controller.dart';
+import 'package:simple_sample/feature/main/presentation/widgets/items/item_locations.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({
@@ -17,28 +20,50 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         title: Text(title ?? 'App'),
       ),
-      body: Center(
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Obx(() =>
-                Text(
-                  '${controller.counter} %',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
+              handleStateLocation(controller.locationState)
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.onPlusButtonPressed(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 
+  Widget handleStateLocation(LocationState state) {
+    if(state is LocationSuccess) {
+      return displayListLocations(state.locations);
+    } else if (state is LocationFailed) {
+      return const Text('Failed loading Locations');
+    } else {
+      return const Center(child: CircularProgressIndicator());
+    }
+  }
+
+  Widget displayListLocations(List<LocationResponse> locations) {
+    return Expanded(
+      child: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(
+            const Duration(seconds: 1),
+            () {
+              controller.getLocations();
+            }
+          );
+        },
+        child: ListView(
+          children: List.generate(
+            locations.length,
+            (index) {
+              return ItemLocation(locationResponse: locations[index]);
+            },
+          ),
+        ),
+      ),
+    );
+  }
 }
