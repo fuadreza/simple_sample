@@ -60,6 +60,7 @@ class LoginView extends GetView<LoginController> {
                   },
                   controller: _passwordController,
                   decoration: inputDecoration('Password', Icons.lock),
+                  obscureText: true,
                 ),
               ),
               SizedBox(
